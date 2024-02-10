@@ -1,0 +1,74 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class tictactoe {
+	private JFrame frame;
+    private JPanel titlePanel, buttonPanel;
+    private JLabel textField;
+    private JButton[] buttons;
+
+    private boolean player1Turn = true;
+    
+    public tictactoe() {
+        frame = new JFrame("Tic Tac Toe");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 500);
+        
+        textField = new JLabel("Player X's Turn!");
+        
+        titlePanel = new JPanel();
+        titlePanel.add(textField);
+        
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(3, 3));
+        
+        buttons = new JButton[9];
+        for(int i=0; i<9; i++) {
+           buttons[i] = new JButton();
+           buttonPanel.add(buttons[i]);
+           buttons[i].setFont(new Font("Arial", Font.BOLD, 120));
+           buttons[i].setFocusable(false);
+           buttons[i].addActionListener(new ButtonClickListener()); 
+        }
+        
+        frame.add(titlePanel, BorderLayout.NORTH);
+        frame.add(buttonPanel);
+        frame.setVisible(true);
+        
+    }
+
+    private class ButtonClickListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+            for(int i=0; i<9; i++) {
+                if(e.getSource() == buttons[i]) {
+                    if(player1Turn) {
+                        buttons[i].setText("X");
+                        player1Turn = false;
+                        textField.setText("Player O's Turn!");
+                    }
+                    else {
+                        buttons[i].setText("O");
+                        player1Turn = true;
+                        textField.setText("Player X's Turn!");  
+                    }
+                    check();
+                }
+            }
+        }
+    }
+    
+    public void check() {
+        // Check winner logic
+    }
+    
+    public static void main(String[] args) {
+        new tictactoe();
+    }
+    
+}
+
